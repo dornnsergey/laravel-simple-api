@@ -13,7 +13,7 @@ class LineResource extends JsonResource
             'id' => $this->id,
             'color' => $this->color,
             'length' => $this->length,
-            'stations' => StationResource::collection($this->stations)
+            'stations' => StationResource::collection($this->whenLoaded('stations '))
         ];
     }
 }

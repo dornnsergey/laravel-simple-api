@@ -12,7 +12,7 @@ class StationService
 {
     public function all()
     {
-        return Station::with(['line', 'underpass'])->get();
+        return Station::with(['line', 'underpass', 'previous', 'next'])->get();
     }
 
     public function create(StoreStationRequest $request)

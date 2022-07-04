@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Station;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StationResource extends JsonResource
@@ -12,10 +13,10 @@ class StationResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'line' => $this->line_id,
-            'previous station' => $this->previous,
-            'next station' => $this->next,
-            'underpass' => $this->whenNotNull($this->underpass_id)
+            'line' => new LineResource($this->whenLoaded('line')),
+            'previous station' => new StationResource($this->whenNotNull($this->whenLoaded('previous'))),
+            'next station' => new StationResource($this->whenNotNull($this->whenLoaded('next'))),
+            'underpass' => new UnderpassResource($this->whenNotNull($this->underpass_id))
         ];
     }
 }

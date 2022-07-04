@@ -26,4 +26,14 @@ class Station extends Model
     {
         return $this->belongsTo(Underpass::class);
     }
+
+    public function next()
+    {
+        return $this->belongsTo(Station::class, 'next_id', 'id');
+    }
+
+    public function previous()
+    {
+        return $this->belongsTo(Station::class, 'previous_id', 'id');
+    }
 }

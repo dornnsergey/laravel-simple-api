@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('line_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->unsignedBigInteger('previous')->nullable();
-            $table->foreign('previous')->references('id')->on('stations');
-            $table->unsignedBigInteger('next')->nullable();
-            $table->foreign('next')->references('id')->on('stations');
+            $table->unsignedBigInteger('previous_id')->nullable();
+            $table->foreign('previous_id')->references('id')->on('stations');
+            $table->unsignedBigInteger('next_id')->nullable();
+            $table->foreign('next_id')->references('id')->on('stations');
             $table->foreignId('underpass_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
