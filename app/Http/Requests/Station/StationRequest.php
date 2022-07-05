@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Station;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreStationRequest extends FormRequest
+class StationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,19 @@ class StoreStationRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'         => ['required', 'max:255', 'unique:stations,name'],
-            'line_id'      => ['required', 'exists:lines,id'],
+        $rules = [
+            'name'         => ['max:255', 'unique:stations,name,' . $this->station?->id],
+            'line_id'      => ['exists:lines,id'],
             'previous'     => ['exists:stations,id'],
             'next'         => ['exists:stations,id'],
             'underpass_id' => ['exists:underpasses,id']
         ];
+
+        if ($this->getMethod() === 'POST') {
+            array_unshift($rules['name'], 'required');
+            array_unshift($rules['line_id'], 'required');
+        }
+
+        return $rules;
     }
 }

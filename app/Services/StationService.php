@@ -2,31 +2,29 @@
 
 namespace App\Services;
 
-
-use App\Http\Requests\StoreStationRequest;
-use App\Http\Requests\UpdateStationRequest;
 use App\Models\Station;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class StationService
 {
-    public function all()
+    public function all(): Collection
     {
         return Station::with(['line', 'underpass', 'previous', 'next'])->get();
     }
 
-    public function create(StoreStationRequest $request)
+    public function create(array $data): Station
     {
-        return Station::create($request->validated());
+        return Station::create($data);
     }
 
-    public function update(UpdateStationRequest $request, Station $station)
+    public function update(array $newData, Station $station): bool
     {
-        return $station->update($request->validated());
+        return $station->update($newData);
     }
 
-    public function delete(Station $station)
+    public function delete(Station $station): bool|null
     {
-        $station->deleteOrFail();
+       return $station->deleteOrFail();
     }
 }

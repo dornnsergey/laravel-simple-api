@@ -12,7 +12,7 @@ class UnderpassResource extends JsonResource
         return [
             'id' => $this->id,
             'column' => $this->column,
-            'stations' => $this->when($this->stations->isNotEmpty(), $this->stations)
+            'stations' => StationResource::collection($this->when($this->stations->isNotEmpty(), $this->whenLoaded('stations')))
         ];
     }
 }

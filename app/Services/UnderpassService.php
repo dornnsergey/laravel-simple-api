@@ -2,29 +2,28 @@
 
 namespace App\Services;
 
-use App\Http\Requests\StoreUnderpassRequest;
-use App\Http\Requests\UpdateUnderpassRequest;
 use App\Models\Underpass;
+use Illuminate\Database\Eloquent\Collection;
 
 class UnderpassService
 {
-    public function all()
+    public function all(): Collection
     {
         return Underpass::with('stations')->get();
     }
 
-    public function create(StoreUnderpassRequest $request)
+    public function create(array $data): Underpass
     {
-        return Underpass::create($request->validated());
+        return Underpass::create($data);
     }
 
-    public function update(UpdateUnderpassRequest $request, Underpass $underpass)
+    public function update(array $newData, Underpass $underpass): bool
     {
-        return $underpass->update($request->validated());
+        return $underpass->update($newData);
     }
 
-    public function delete(Underpass $underpass)
+    public function delete(Underpass $underpass): bool|null
     {
-        $underpass->deleteOrFail();
+        return $underpass->deleteOrFail();
     }
 }

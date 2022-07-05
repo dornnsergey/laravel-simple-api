@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Line;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUnderpassRequest extends FormRequest
+class UpdateLineRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class StoreUnderpassRequest extends FormRequest
     public function rules()
     {
         return [
-            'column' => ['required', 'string']
+            'color' => ['required', 'max:255', 'unique:lines,color,' . $this->line->id],
+            'length' => ['required', 'numeric'],
         ];
     }
 }

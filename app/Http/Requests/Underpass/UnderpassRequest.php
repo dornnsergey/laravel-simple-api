@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Underpass;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateLineRequest extends FormRequest
+class UnderpassRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,14 @@ class UpdateLineRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'color' => ['required', 'max:255', 'unique:lines,color,' . $this->line->id],
-            'length' => ['required', 'numeric'],
+        $rules = [
+            'column' => ['string']
         ];
+
+        if ($this->getMethod() === 'POST') {
+            array_unshift($rules['column'], 'required');
+        }
+
+        return $rules;
     }
 }

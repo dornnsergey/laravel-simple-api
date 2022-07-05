@@ -2,31 +2,29 @@
 
 namespace App\Services;
 
-
-use App\Http\Requests\StoreLineRequest;
-use App\Http\Requests\UpdateLineRequest;
 use App\Models\Line;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class LineService
 {
-    public function all()
+    public function all(): Collection
     {
         return Line::with('stations')->get();
     }
 
-    public function create(StoreLineRequest $request)
+    public function create(array $data): Line
     {
-        return Line::create($request->validated());
+        return Line::create($data);
     }
 
-    public function update(UpdateLineRequest $request, Line $line)
+    public function update(array $newData, Line $line): bool
     {
-        return $line->update($request->validated());
+        return $line->update($newData);
     }
 
-    public function delete(Line $line)
+    public function delete(Line $line): bool|null
     {
-        $line->deleteOrFail();
+        return $line->deleteOrFail();
     }
 }
